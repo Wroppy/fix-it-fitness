@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Fix It Fitness</string>
+
+    <!-- Strings for the introduction page -->
+    <string name="introduction_title">Welcome To Fix-it-Fitness</string>
+    <string name="introduction_welcome">Welcome to your very own personal planner!</string>
+    <string name="introduction_description_text">Strength and Conditioning</string>
+    <string name="introduction_planner_text">Schedule your planner</string>
+
+    <!-- Strings for the image descriptions   -->
+    <string name="image_description_placeholder">Place holder image for the introduction screen</string>
+    <string name="icon_description_people">Icon of people</string>
+    <string name="icon_description_calendar">Icon of a calendar</string>
+    <string name="icon_description_dumbbell">Icon of a dumbbell</string>
+
+    <string name="continue_button_text">Continue</string>
+
+</resources>
