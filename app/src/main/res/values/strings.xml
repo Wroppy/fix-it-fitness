@@ -15,4 +15,20 @@
 
     <string name="continue_button_text">Continue</string>
 
+    <!-- Strings for asking the user about configuring their prevention plan   -->
+    <string name="prevention_plan_title">Build Your Prevention Plan!</string>
+    <string name="prevention_plan_description">We need to know a little bit about you to build your prevention plan.</string>
+    <string name="prevention_plan_button_text">Build Plan</string>
+
+    <!-- Strings for the prevention plan questions   -->
+    <string name="prevention_plan_question_1">What is your height?</string>
+    <string name="prevention_plan_question_1_hint">Height (cm)</string>
+    <string name="prevention_plan_question_2">What is your weight?</string>
+    <string name="prevention_plan_question_2_hint">Weight (kg)</string>
+
+    <string name="prevention_plan_question_3">Question 3 placeholder</string>
+    <string name="prevention_plan_question_3_hint">Question 3 hint placeholder</string>
+    <string name="prevention_plan_question_4">Question 4 placeholder</string>
+    <string name="prevention_plan_question_4_hint">Question 4 hint placeholder</string>
+
 </resources>
