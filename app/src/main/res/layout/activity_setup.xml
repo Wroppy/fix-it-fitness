@@ -39,6 +39,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/prevention_plan_question_1"
             android:textSize="24sp"
             tools:text="@string/prevention_plan_question_1" />
 
@@ -67,7 +68,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/prevention_plan_question_2"
             android:textSize="24sp"
             tools:text="@string/prevention_plan_question_2" />
 
@@ -135,6 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
+        android:onClick="setupUser"
         android:paddingLeft="48dp"
         android:paddingTop="12dp"
         android:paddingRight="48dp"
