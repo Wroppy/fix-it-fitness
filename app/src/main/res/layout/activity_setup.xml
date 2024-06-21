@@ -166,6 +166,8 @@
                 android:id="@+id/button"
                 android:layout_width="233dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
                 android:onClick="setupUser"
                 android:paddingLeft="48dp"
                 android:paddingTop="12dp"
