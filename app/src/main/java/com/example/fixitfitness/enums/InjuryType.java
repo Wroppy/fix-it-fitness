@@ -1,4 +1,4 @@
-package com.example.fixitfitness;
+package com.example.fixitfitness.enums;
 
 public enum InjuryType {
     UPPER_BODY("Upper Body", 0),

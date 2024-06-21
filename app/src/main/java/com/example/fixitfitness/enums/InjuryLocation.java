@@ -1,4 +1,4 @@
-package com.example.fixitfitness;
+package com.example.fixitfitness.enums;
 
 import java.util.ArrayList;
 import java.util.List;

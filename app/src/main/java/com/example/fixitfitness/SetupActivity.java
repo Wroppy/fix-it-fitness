@@ -15,6 +15,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.fixitfitness.enums.FootballLevel;
+import com.example.fixitfitness.enums.InjuryLocation;
+import com.example.fixitfitness.enums.InjuryType;
 import com.example.fixitfitness.exceptions.InvalidHeightException;
 import com.example.fixitfitness.exceptions.InvalidLevelException;
 import com.example.fixitfitness.exceptions.InvalidNameException;
