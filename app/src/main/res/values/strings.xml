@@ -29,12 +29,6 @@
     <string name="prevention_plan_name_question_hint">Name</string>
 
     <string name="prevention_plan_question_3">What level are you playing football at?</string>
-    <string-array name="football_levels">
-        <item>Casual</item>
-        <item>Amateur</item>
-        <item>Semi-committed</item>
-        <item>Committed</item>
-    </string-array>
 
     <string name="prevention_plan_question_4">Where have you had previous injuries?</string>
 

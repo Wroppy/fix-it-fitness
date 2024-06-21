@@ -152,7 +152,7 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     private List<String> getFootballLevels() {
-        return Arrays.asList(getResources().getStringArray(R.array.football_levels));
+        return FootballLevels.getFootballLevels();
     }
 
     private List<String> getInjuryTypes() {
