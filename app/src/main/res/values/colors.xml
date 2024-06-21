@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#D8D8D8</color>
 
+    <color name="switch_thumb_color">#ADADAD</color>
+
     <color name="textOnPrimary">#c7c5c5</color>
     <!--   C olor for the app bar and other primary UI elements. -->
     <color name="primary">#0091d8</color>
@@ -12,6 +14,10 @@
     <color name="primaryDark">#006597</color>
 
     <color name="primaryLight">#0399E2</color>
+
+    <!--   A lighter variant of the primary color, used for
+           the background of the app bar. -->
+    <color name="primaryVeryLight">#45BDF8</color>
 
     <!--   a secondary color for controls like checkboxes and text fields. -->
     <color name="colorAccent">#FF4081</color>

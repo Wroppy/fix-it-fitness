@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -18,11 +19,13 @@ import com.example.fixitfitness.exceptions.InvalidHeightException;
 import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
 import com.example.fixitfitness.utils.Utils;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class SetupActivity extends AppCompatActivity {
     private ScrollView scrollView;
     private LinearLayout layout;
     private RadioGroup footballLevelGroup;
+    private LinearLayout injuryLocationGroup;
+    private List<SwitchCompat> injuryButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class SetupActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.questions_scrollview);
         layout = findViewById(R.id.questions_layout);
         footballLevelGroup = findViewById(R.id.football_level_group);
+        injuryLocationGroup = findViewById(R.id.injury_location_group);
+        injuryButtons = new ArrayList<>();
 
         // Add a global layout listener to detect when the layout has been drawn
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -67,6 +74,7 @@ public class SetupActivity extends AppCompatActivity {
         });
 
         addRadioButtons();
+        addInjuryButtons();
     }
 
     public void setupUser(View view) {
@@ -147,5 +155,36 @@ public class SetupActivity extends AppCompatActivity {
         return Arrays.asList(getResources().getStringArray(R.array.football_levels));
     }
 
+    private List<String> getInjuryTypes() {
+        return Arrays.asList(getResources().getStringArray(R.array.injury_locations));
+    }
+
+    private void addInjuryButtons() {
+        // Add toggle buttons to the layout
+        List<String> injuryTypes = getInjuryTypes();
+
+        for (String type : injuryTypes) {
+            addInjuryButton(type);
+        }
+    }
+
+    private void addInjuryButton(String text) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        // Adds padding to the bottom of the button
+        params.setMargins(0, 0, 0, 20);
+
+        // Sets the text of the ToggleButton
+        SwitchCompat toggleButton = new SwitchCompat(this);
+
+        toggleButton.setText(text);
+        toggleButton.setTextSize(20);
+
+        injuryButtons.add(toggleButton);
+        injuryLocationGroup.addView(toggleButton, params);
+    }
 
 }

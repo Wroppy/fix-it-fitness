@@ -153,14 +153,13 @@
                     android:text="@string/prevention_plan_question_4"
                     android:textSize="24sp" />
 
-                <EditText
-                    android:id="@+id/editTextNumberDecimal4"
+                <LinearLayout
+                    android:id="@+id/injury_location_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/prevention_plan_question_4_hint"
-                    android:inputType="numberDecimal"
-                    android:textSize="24sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp" />
+
             </LinearLayout>
 
             <Button
