@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.fixitfitness.exceptions.InvalidHeightException;
 import com.example.fixitfitness.exceptions.InvalidLevelException;
+import com.example.fixitfitness.exceptions.InvalidNameException;
 import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
 import com.example.fixitfitness.utils.Utils;
@@ -80,11 +81,13 @@ public class SetupActivity extends AppCompatActivity {
 
     public void setupUser(View view) {
         try {
+            String name = getName();
             float height = getHeight();
             float weight = getWeight();
             FootballLevel level = getFootballLevel();
             InjuryType injuryType = getInjuryType();
 
+            Log.d("Name:", name);
             Log.d("Height:", String.valueOf(height));
             Log.d("Weight:", String.valueOf(weight));
             Log.d("Level:", level.getName());
@@ -236,6 +239,15 @@ public class SetupActivity extends AppCompatActivity {
 
         // Otherwise, return the single injury type
         return injuryTypes.iterator().next();
+    }
+
+    private String getName() throws InvalidNameException {
+        EditText nameEdit = findViewById(R.id.name_edit);
+        String name = nameEdit.getText().toString().trim();
+        if (name.isEmpty()) {
+            throw new InvalidNameException();
+        }
+        return name;
     }
 
 }
