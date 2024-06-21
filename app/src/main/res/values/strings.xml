@@ -32,19 +32,4 @@
 
     <string name="prevention_plan_question_4">Where have you had previous injuries?</string>
 
-    <string-array name="injury_locations">
-        <item>Head</item>
-        <item>Neck</item>
-        <item>Shoulder</item>
-        <item>Elbow</item>
-        <item>Wrist</item>
-        <item>Hand</item>
-        <item>Back</item>
-        <item>Hip</item>
-        <item>Thigh</item>
-        <item>Knee</item>
-        <item>Shin</item>
-        <item>Ankle</item>
-        <item>Foot</item>
-    </string-array>
 </resources>

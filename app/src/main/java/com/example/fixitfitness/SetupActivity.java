@@ -19,7 +19,6 @@ import com.example.fixitfitness.exceptions.InvalidHeightException;
 import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
 import com.example.fixitfitness.utils.Utils;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -152,11 +151,11 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     private List<String> getFootballLevels() {
-        return FootballLevels.getFootballLevels();
+        return FootballLevel.getFootballLevels();
     }
 
     private List<String> getInjuryTypes() {
-        return Arrays.asList(getResources().getStringArray(R.array.injury_locations));
+        return InjuryLocation.getInjuryLocations();
     }
 
     private void addInjuryButtons() {
