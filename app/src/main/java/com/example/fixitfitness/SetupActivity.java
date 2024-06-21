@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.fixitfitness.exceptions.InvalidHeightException;
+import com.example.fixitfitness.exceptions.InvalidLevelException;
 import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
 import com.example.fixitfitness.utils.Utils;
@@ -25,7 +26,6 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SetupActivity extends AppCompatActivity {
@@ -80,7 +80,9 @@ public class SetupActivity extends AppCompatActivity {
         try {
             float height = getHeight();
             float weight = getWeight();
+            FootballLevel level = getFootballLevel();
 
+            Log.d("Level:", level.getName());
 
             // Save the user's height and weight
             // Redirect to the main activity
@@ -128,13 +130,14 @@ public class SetupActivity extends AppCompatActivity {
         // Add radio buttons to the layout
         List<String> footballLevels = getFootballLevels();
 
-        for (String level : footballLevels) {
-            addRadioButton(level);
+        for (int i = 0; i < footballLevels.size(); i++) {
+            String level = footballLevels.get(i);
+            addRadioButton(level, i);
         }
 
     }
 
-    private void addRadioButton(String text) {
+    private void addRadioButton(String text, int id) {
 
         RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
                 RadioGroup.LayoutParams.WRAP_CONTENT,
@@ -145,6 +148,7 @@ public class SetupActivity extends AppCompatActivity {
         RadioButton radioButton = new RadioButton(this);
         radioButton.setText(text);
         radioButton.setTextSize(20);
+        radioButton.setId(id);
 
 
         footballLevelGroup.addView(radioButton, params);
@@ -186,4 +190,13 @@ public class SetupActivity extends AppCompatActivity {
         injuryLocationGroup.addView(toggleButton, params);
     }
 
+    public FootballLevel getFootballLevel() throws SetupException {
+        int selectedId = footballLevelGroup.getCheckedRadioButtonId();
+        if (selectedId == -1) {
+            throw new InvalidLevelException();
+        }
+
+        RadioButton selectedButton = findViewById(selectedId);
+        return FootballLevel.getFootballLevel(selectedButton.getText().toString());
+    }
 }

@@ -42,13 +42,13 @@ public enum FootballLevel {
         return footballLevels;
     }
 
-    public static int getLevel(String name) {
+    public static FootballLevel getFootballLevel(String name) {
         for (FootballLevel footballLevel : FootballLevel.values()) {
             if (footballLevel.getName().equals(name)) {
-                return footballLevel.getLevel();
+                return footballLevel;
             }
         }
-        return -1;
+        return null;
     }
 
     public static boolean isValidLevel(String name) {

@@ -43,4 +43,15 @@ public enum InjuryLocation {
         }
         return injuryLocations;
     }
+
+    public static InjuryLocation getInjuryLocation(String name) {
+        for (InjuryLocation injuryLocation : InjuryLocation.values()) {
+            if (injuryLocation.getName().equals(name)) {
+                return injuryLocation;
+            }
+        }
+        return null;
+    }
+
+
 }
