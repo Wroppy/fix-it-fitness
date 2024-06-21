@@ -26,7 +26,9 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SetupActivity extends AppCompatActivity {
 
@@ -81,8 +83,12 @@ public class SetupActivity extends AppCompatActivity {
             float height = getHeight();
             float weight = getWeight();
             FootballLevel level = getFootballLevel();
+            InjuryType injuryType = getInjuryType();
 
+            Log.d("Height:", String.valueOf(height));
+            Log.d("Weight:", String.valueOf(weight));
             Log.d("Level:", level.getName());
+            Log.d("Injury Type:", injuryType.getName());
 
             // Save the user's height and weight
             // Redirect to the main activity
@@ -190,7 +196,7 @@ public class SetupActivity extends AppCompatActivity {
         injuryLocationGroup.addView(toggleButton, params);
     }
 
-    public FootballLevel getFootballLevel() throws SetupException {
+    private FootballLevel getFootballLevel() throws SetupException {
         int selectedId = footballLevelGroup.getCheckedRadioButtonId();
         if (selectedId == -1) {
             throw new InvalidLevelException();
@@ -199,4 +205,37 @@ public class SetupActivity extends AppCompatActivity {
         RadioButton selectedButton = findViewById(selectedId);
         return FootballLevel.getFootballLevel(selectedButton.getText().toString());
     }
+
+
+    private List<InjuryLocation> getInjuryLocations() {
+        List<InjuryLocation> locations = new ArrayList<>();
+        for (SwitchCompat button : injuryButtons) {
+            if (button.isChecked()) {
+                locations.add(InjuryLocation.getInjuryLocation(button.getText().toString()));
+            }
+        }
+        return locations;
+    }
+
+    private InjuryType getInjuryType() {
+        List<InjuryLocation> locations = getInjuryLocations();
+        if (locations.isEmpty()) {
+            return InjuryType.HEALTHY;
+        }
+
+        // Gets the number of unique injury types
+        Set<InjuryType> injuryTypes = new HashSet<>();
+        for (InjuryLocation location : locations) {
+            injuryTypes.add(InjuryType.getInjuryType(location));
+        }
+
+        // If there is more than one injury type, return COMBINED
+        if (injuryTypes.size() > 1) {
+            return InjuryType.COMBINED;
+        }
+
+        // Otherwise, return the single injury type
+        return injuryTypes.iterator().next();
+    }
+
 }

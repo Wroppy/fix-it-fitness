@@ -52,6 +52,4 @@ public enum InjuryLocation {
         }
         return null;
     }
-
-
 }

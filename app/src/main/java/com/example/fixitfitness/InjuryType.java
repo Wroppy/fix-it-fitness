@@ -2,7 +2,10 @@ package com.example.fixitfitness;
 
 public enum InjuryType {
     UPPER_BODY("Upper Body", 0),
-    LOWER_BODY("Lower Body", 1);
+    LOWER_BODY("Lower Body", 1),
+    COMBINED("Upper and Lower Body", 2),
+    HEALTHY("Healthy", 3);
+
 
     private final String name;
     private final int type;
