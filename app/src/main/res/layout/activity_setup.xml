@@ -132,14 +132,11 @@
                     android:text="@string/prevention_plan_question_3"
                     android:textSize="24sp" />
 
-                <EditText
-                    android:id="@+id/editTextNumberDecimal3"
+                <RadioGroup
+                    android:id="@+id/football_level_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/prevention_plan_question_3_hint"
-                    android:inputType="numberDecimal"
-                    android:textSize="24sp" />
+                    android:layout_height="match_parent" />
+
             </LinearLayout>
 
             <LinearLayout

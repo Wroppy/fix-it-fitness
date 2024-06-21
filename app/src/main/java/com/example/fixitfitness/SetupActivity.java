@@ -7,7 +7,6 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +19,18 @@ import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
 import com.example.fixitfitness.utils.Utils;
 
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SetupActivity extends AppCompatActivity {
 
     private ScrollView scrollView;
     private LinearLayout layout;
+    private RadioGroup footballLevelGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class SetupActivity extends AppCompatActivity {
 
         scrollView = findViewById(R.id.questions_scrollview);
         layout = findViewById(R.id.questions_layout);
+        footballLevelGroup = findViewById(R.id.football_level_group);
 
         // Add a global layout listener to detect when the layout has been drawn
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -59,6 +65,8 @@ public class SetupActivity extends AppCompatActivity {
                 }
             }
         });
+
+        addRadioButtons();
     }
 
     public void setupUser(View view) {
@@ -107,6 +115,36 @@ public class SetupActivity extends AppCompatActivity {
         }
 
         return Float.parseFloat(heightEdit.getText().toString());
+    }
+
+    private void addRadioButtons() {
+        // Add radio buttons to the layout
+        List<String> footballLevels = getFootballLevels();
+
+        for (String level : footballLevels) {
+            addRadioButton(level);
+        }
+
+    }
+
+    private void addRadioButton(String text) {
+
+        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
+                RadioGroup.LayoutParams.WRAP_CONTENT,
+                RadioGroup.LayoutParams.WRAP_CONTENT
+        );
+
+        // Sets the text of the RadioButton
+        RadioButton radioButton = new RadioButton(this);
+        radioButton.setText(text);
+        radioButton.setTextSize(20);
+
+
+        footballLevelGroup.addView(radioButton, params);
+    }
+
+    private List<String> getFootballLevels() {
+        return Arrays.asList(getResources().getStringArray(R.array.football_levels));
     }
 
 
