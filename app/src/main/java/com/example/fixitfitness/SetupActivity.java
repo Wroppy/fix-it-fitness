@@ -3,7 +3,10 @@ package com.example.fixitfitness;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +20,12 @@ import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
 import com.example.fixitfitness.utils.Utils;
 
+import android.widget.ScrollView;
+
 public class SetupActivity extends AppCompatActivity {
+
+    private ScrollView scrollView;
+    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,28 @@ public class SetupActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        scrollView = findViewById(R.id.questions_scrollview);
+        layout = findViewById(R.id.questions_layout);
+
+        // Add a global layout listener to detect when the layout has been drawn
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Remove the listener to avoid multiple calls
+                scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                // Check if the ScrollView can scroll
+                boolean canScroll = scrollView.getChildAt(0).getHeight() > scrollView.getHeight();
+
+                if (canScroll) {
+                    // If the ScrollView can scroll, make the inner content take full height
+                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layout.getLayoutParams();
+                    params.height = scrollView.getHeight();
+                    layout.setLayoutParams(params);
+                }
+            }
         });
     }
 
