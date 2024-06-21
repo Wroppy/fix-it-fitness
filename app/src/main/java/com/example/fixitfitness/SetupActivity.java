@@ -44,6 +44,7 @@ public class SetupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Sets up and displays the activity
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_setup);
@@ -53,12 +54,14 @@ public class SetupActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Sets up the variables for future use
         scrollView = findViewById(R.id.questions_scrollview);
         layout = findViewById(R.id.questions_layout);
         footballLevelGroup = findViewById(R.id.football_level_group);
         injuryLocationGroup = findViewById(R.id.injury_location_group);
         injuryButtons = new ArrayList<>();
 
+        // Sets up the layout to take full height if the ScrollView can scroll
         // Add a global layout listener to detect when the layout has been drawn
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -78,12 +81,14 @@ public class SetupActivity extends AppCompatActivity {
             }
         });
 
+        // Adds radio buttons and toggle buttons to the layout
         addRadioButtons();
         addInjuryButtons();
     }
 
     public void setupUser(View view) {
         try {
+            // Gets the user's setup information
             String name = getName();
             float height = getHeight();
             float weight = getWeight();
@@ -96,41 +101,56 @@ public class SetupActivity extends AppCompatActivity {
             Log.d("Level:", level.getName());
             Log.d("Injury Type:", injuryType.getName());
 
-            // Save the user's height and weight
-            // Redirect to the main activity
+            // TODO: Save the user's height and weight
+            // TODO: Redirect to the main activity
         } catch (SetupException e) {
             Log.e("SetupActivity", "Error setting up user", e);
             Utils.showPopup(this, e.getMessage());
         }
     }
 
-
+    /**
+     * Gets the weight of the user from the EditText
+     *
+     * @return the weight of the user
+     * @throws InvalidWeightException if the weight is empty or less than or equal to 0
+     */
     private float getWeight() throws InvalidWeightException {
         EditText weightEdit = findViewById(R.id.weight_edit);
         float weight;
 
         try {
+            // Checks for a valid float value
             weight = Float.parseFloat(weightEdit.getText().toString());
         } catch (NumberFormatException e) {
             throw new InvalidWeightException();
         }
 
+        // Checks if the weight is less than or equal to 0
         if (weight <= 0) {
             throw new InvalidWeightException();
         }
         return weight;
     }
 
+    /**
+     * Gets the height of the user from the EditText
+     *
+     * @return the height of the user
+     * @throws InvalidHeightException if the height is empty or less than or equal to 0
+     */
     private float getHeight() throws InvalidHeightException {
         EditText heightEdit = findViewById(R.id.height_edit);
         float height;
 
         try {
+            // Checks for a valid float value
             height = Float.parseFloat(heightEdit.getText().toString());
         } catch (NumberFormatException e) {
             throw new InvalidHeightException();
         }
 
+        // Checks if the height is less than or equal to 0
         if (height <= 0) {
             throw new InvalidHeightException();
         }
@@ -138,6 +158,9 @@ public class SetupActivity extends AppCompatActivity {
         return Float.parseFloat(heightEdit.getText().toString());
     }
 
+    /**
+     * Adds radio buttons to the layout with the given text
+     */
     private void addRadioButtons() {
         // Add radio buttons to the layout
         List<String> footballLevels = getFootballLevels();
@@ -149,8 +172,15 @@ public class SetupActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Adds a RadioButton to the layout with the given text and id
+     *
+     * @param text the text to display on the RadioButton
+     * @param id   the id of the RadioButton
+     */
     private void addRadioButton(String text, int id) {
 
+        // Sets the layout parameters for the RadioButton
         RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
                 RadioGroup.LayoutParams.WRAP_CONTENT,
                 RadioGroup.LayoutParams.WRAP_CONTENT
@@ -166,14 +196,27 @@ public class SetupActivity extends AppCompatActivity {
         footballLevelGroup.addView(radioButton, params);
     }
 
+    /**
+     * Gets the football levels from the FootballLevel enum
+     *
+     * @return the football levels
+     */
     private List<String> getFootballLevels() {
         return FootballLevel.getFootballLevels();
     }
 
+    /**
+     * Gets the injury locations from the InjuryLocation enum
+     *
+     * @return the injury locations
+     */
     private List<String> getInjuryTypes() {
         return InjuryLocation.getInjuryLocations();
     }
 
+    /**
+     * Adds toggle buttons to the layout with the given text
+     */
     private void addInjuryButtons() {
         // Add toggle buttons to the layout
         List<String> injuryTypes = getInjuryTypes();
@@ -183,6 +226,11 @@ public class SetupActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds a toggle button to the layout with the given text
+     *
+     * @param text the text to display on the button
+     */
     private void addInjuryButton(String text) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -198,10 +246,17 @@ public class SetupActivity extends AppCompatActivity {
         toggleButton.setText(text);
         toggleButton.setTextSize(20);
 
+        // Adds the button to the layout and the list of buttons
         injuryButtons.add(toggleButton);
         injuryLocationGroup.addView(toggleButton, params);
     }
 
+    /**
+     * Gets the football level of the user based on the selected radio button
+     *
+     * @return the football level of the user
+     * @throws SetupException if no radio button is selected
+     */
     private FootballLevel getFootballLevel() throws SetupException {
         int selectedId = footballLevelGroup.getCheckedRadioButtonId();
         if (selectedId == -1) {
@@ -212,7 +267,11 @@ public class SetupActivity extends AppCompatActivity {
         return FootballLevel.getFootballLevel(selectedButton.getText().toString());
     }
 
-
+    /**
+     * Gets the injury locations of the user based on the selected injury buttons
+     *
+     * @return the injury locations of the user
+     */
     private List<InjuryLocation> getInjuryLocations() {
         List<InjuryLocation> locations = new ArrayList<>();
         for (SwitchCompat button : injuryButtons) {
@@ -223,6 +282,11 @@ public class SetupActivity extends AppCompatActivity {
         return locations;
     }
 
+    /**
+     * Gets the injury type of the user based on the selected injury locations
+     *
+     * @return the injury type of the user
+     */
     private InjuryType getInjuryType() {
         List<InjuryLocation> locations = getInjuryLocations();
         if (locations.isEmpty()) {
@@ -244,9 +308,17 @@ public class SetupActivity extends AppCompatActivity {
         return injuryTypes.iterator().next();
     }
 
+    /**
+     * Gets the name of the user from the EditText
+     *
+     * @return the name of the user
+     * @throws InvalidNameException if the name is empty
+     */
     private String getName() throws InvalidNameException {
         EditText nameEdit = findViewById(R.id.name_edit);
+        // Gets the text from the EditText and removes any leading or trailing whitespace
         String name = nameEdit.getText().toString().trim();
+
         if (name.isEmpty()) {
             throw new InvalidNameException();
         }
