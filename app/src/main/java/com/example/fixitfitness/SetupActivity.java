@@ -15,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.fixitfitness.enums.BodyType;
 import com.example.fixitfitness.enums.FootballLevel;
 import com.example.fixitfitness.enums.InjuryLocation;
 import com.example.fixitfitness.enums.InjuryType;
@@ -23,6 +24,7 @@ import com.example.fixitfitness.exceptions.InvalidLevelException;
 import com.example.fixitfitness.exceptions.InvalidNameException;
 import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
+import com.example.fixitfitness.fitnessroutine.Routine;
 import com.example.fixitfitness.utils.Utils;
 
 import android.widget.RadioButton;
@@ -103,6 +105,9 @@ public class SetupActivity extends AppCompatActivity {
 
             // TODO: Save the user's height and weight
             // TODO: Redirect to the main activity
+            Routine routine = createRoutine(level, injuryType, weight, height);
+            Log.d("Routine:", routine.toString());
+
         } catch (SetupException e) {
             Log.e("SetupActivity", "Error setting up user", e);
             Utils.showPopup(this, e.getMessage());
@@ -323,6 +328,28 @@ public class SetupActivity extends AppCompatActivity {
             throw new InvalidNameException();
         }
         return name;
+    }
+
+
+    private Routine createRoutine(FootballLevel level, InjuryType injuryType, float weight, float height) {
+        BodyType bodyType = getBodyType(weight, height);
+        Log.d("Body Type:", bodyType.toString());
+        return new Routine(level, injuryType, bodyType);
+    }
+
+
+    private BodyType getBodyType(float weight, float height) {
+        float bmi = 10000 *  weight / (height * height) ;
+        Log.d("BMI: ", String.valueOf(bmi));
+        if (bmi < 18.5) {
+            return BodyType.LIGHT;
+        } else if (bmi < 24.9) {
+            return BodyType.MEDIUM;
+        } else if (bmi < 29.9) {
+            return BodyType.HEAVY;
+        } else {
+            return BodyType.VERY_HEAVY;
+        }
     }
 
 }

@@ -4,17 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum FootballLevel {
-    CASUAL("Casual", 0),
-    AMATEUR("Amateur", 1),
-    SEMI_COMMITTED("Semi Committed", 2),
-    COMMITTED("Committed", 3);
+    CASUAL("Casual", 0, 4),
+    AMATEUR("Amateur", 1, 4),
+    SEMI_COMMITTED("Semi Committed", 2, 6),
+    COMMITTED("Committed", 3, 6);
 
     private final String name;
     private final int level;
+    private final int weeklySessions;
 
-    FootballLevel(String name, int level) {
+    FootballLevel(String name, int level, int weeklySessions) {
         this.name = name;
         this.level = level;
+        this.weeklySessions = weeklySessions;
+
+    }
+
+    public int getWeeklySessions() {
+        return weeklySessions;
     }
 
     public String getName() {
@@ -72,9 +79,6 @@ public enum FootballLevel {
     public static boolean isValidLevel(FootballLevel footballLevel) {
         return footballLevel != null;
     }
-
-
-
 
 
 }
