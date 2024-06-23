@@ -190,6 +190,7 @@ public class Routine {
         int numSessions = intent.getIntExtra("fitnessSessions", 0);
 
         this.numSessions = numSessions / 2;
+        Log.d("NumSessions", "" + numSessions);
 
         for (int i = 0; i < numSessions; i++) {
             String sessionString = intent.getStringExtra("fitnessSession" + i);
