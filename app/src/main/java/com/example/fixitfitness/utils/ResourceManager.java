@@ -75,4 +75,11 @@ public class ResourceManager {
         }
         return sb.toString();
     }
+
+    public UserInfo readUserInfo(Context context) {
+        String name = readFile(context, "name.txt");
+        String routineString = readFile(context, "routine.txt");
+        Routine routine = new Routine(routineString);
+        return new UserInfo(name, routine);
+    }
 }

@@ -235,4 +235,16 @@ public class Routine {
         }
         return weekB.toString();
     }
+
+    public Routine(String routineString) {
+        this.sessions = new ArrayList<>();
+        String[] splitString = routineString.split("\n");
+        int numSessions = Integer.parseInt(splitString[0]);
+
+        for (int i = 1; i <= numSessions; i++) {
+            FitnessSession session = createSession(splitString[i]);
+            sessions.add(session);
+        }
+
+    }
 }
