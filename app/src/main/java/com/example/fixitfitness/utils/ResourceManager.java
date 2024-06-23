@@ -3,6 +3,7 @@ package com.example.fixitfitness.utils;
 import android.content.Context;
 
 import com.example.fixitfitness.UserInfo;
+import com.example.fixitfitness.exceptions.NotSetupException;
 import com.example.fixitfitness.fitnessroutine.FitnessSession;
 import com.example.fixitfitness.fitnessroutine.Routine;
 
@@ -58,7 +59,7 @@ public class ResourceManager {
         writeToFile(context, "test.txt", "Hello, world!");
     }
 
-    public String readFile(Context context, String filename) {
+    public String readFile(Context context, String filename) throws IOException {
         // Read from a file
         File directory = getDirectory(context);
         File file = new File(directory, filename);
@@ -72,14 +73,33 @@ public class ResourceManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new IOException("Error reading file");
         }
         return sb.toString();
     }
 
-    public UserInfo readUserInfo(Context context) {
-        String name = readFile(context, "name.txt");
-        String routineString = readFile(context, "routine.txt");
-        Routine routine = new Routine(routineString);
-        return new UserInfo(name, routine);
+    public UserInfo readUserInfo(Context context) throws NotSetupException {
+        try {
+            String name = readFile(context, "name.txt");
+            String routineString = readFile(context, "routine.txt");
+            Routine routine = new Routine(routineString);
+
+            if (name.isEmpty() || routineString.isEmpty()) {
+                throw new NotSetupException();
+            }
+            return new UserInfo(name, routine);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new NotSetupException();
+        }
     }
+
+    public void deleteUserInfo(Context context) {
+        File directory = getDirectory(context);
+        File nameFile = new File(directory, "name.txt");
+        File routineFile = new File(directory, "routine.txt");
+        nameFile.delete();
+        routineFile.delete();
+    }
+
 }
