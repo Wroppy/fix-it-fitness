@@ -10,6 +10,10 @@ public class UpperBodyGymSession implements FitnessSession{
         this.description = "A gym session that focuses on the upper body, including chest, back, and arms.";
     }
 
+    public UpperBodyGymSession(String bundleString) {
+        this();
+    }
+
     @Override
     public String getName() {
         return name;
@@ -24,4 +28,11 @@ public class UpperBodyGymSession implements FitnessSession{
     public FitnessSession copy() {
         return new UpperBodyGymSession();
     }
+
+    @Override
+    public String bundleToString() {
+        return "UpperBodyGymSession";
+    }
+
+
 }

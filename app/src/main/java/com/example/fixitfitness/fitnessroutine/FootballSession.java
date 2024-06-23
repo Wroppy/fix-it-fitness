@@ -9,6 +9,10 @@ public class FootballSession implements FitnessSession {
         this.description = "A football session that includes a warm-up, drills, and a scrimmage.";
     }
 
+    public FootballSession(String bundleString) {
+        this();
+    }
+
     @Override
     public String getName() {
         return name;
@@ -24,4 +28,8 @@ public class FootballSession implements FitnessSession {
         return new FootballSession();
     }
 
+    @Override
+    public String bundleToString() {
+        return "Football";
+    }
 }

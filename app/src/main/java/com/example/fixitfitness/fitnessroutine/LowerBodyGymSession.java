@@ -9,6 +9,10 @@ public class LowerBodyGymSession implements FitnessSession{
         this.description = "A lower body gym session that includes squats, lunges, and leg presses.";
     }
 
+    public LowerBodyGymSession(String bundleString) {
+        this();
+    }
+
     @Override
     public String getName() {
         return name;
@@ -22,6 +26,11 @@ public class LowerBodyGymSession implements FitnessSession{
     @Override
     public FitnessSession copy() {
         return new LowerBodyGymSession();
+    }
+
+    @Override
+    public String bundleToString() {
+        return "LowerBodyGymSession";
     }
 
 }

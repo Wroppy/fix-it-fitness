@@ -1,5 +1,9 @@
 package com.example.fixitfitness.fitnessroutine;
 
+import android.content.Intent;
+
+import androidx.annotation.NonNull;
+
 import com.example.fixitfitness.enums.BodyType;
 import com.example.fixitfitness.enums.FootballLevel;
 import com.example.fixitfitness.enums.InjuryType;
@@ -10,6 +14,7 @@ import java.util.List;
 /**
  * Represents a routine that a user can follow.
  */
+
 public class Routine {
     private List<FitnessSession> sessions;
 
@@ -153,6 +158,7 @@ public class Routine {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         StringBuilder routine = new StringBuilder();
@@ -160,5 +166,50 @@ public class Routine {
             routine.append(session.getName()).append(": ").append(session.getDescription()).append("\n");
         }
         return routine.toString();
+    }
+
+    /**
+     * Bundles the routine into an intent.
+     *
+     * @param intent the intent to bundle the routine into
+     */
+    public void bundleRoutine(Intent intent) {
+        intent.putExtra("fitnessSessions", sessions.size());
+
+        for (int i = 0; i < sessions.size(); i++) {
+            intent.putExtra("fitnessSession" + i, sessions.get(i).bundleToString());
+        }
+    }
+
+    public Routine(Intent intent) {
+        this.sessions = new ArrayList<>();
+        int numSessions = intent.getIntExtra("fitnessSessions", 0);
+
+        for (int i = 0; i < numSessions; i++) {
+            String sessionString = intent.getStringExtra("fitnessSession" + i);
+
+            if (sessionString == null) {
+                continue;
+            }
+
+            FitnessSession session = createSession(sessionString);
+            sessions.add(session);
+        }
+    }
+
+    private FitnessSession createSession(String sessionString) {
+        String[] splitString = sessionString.split(",");
+        switch (splitString[0]) {
+            case "ConditioningSession":
+                return new ConditioningSession(sessionString);
+            case "Football":
+                return new FootballSession(sessionString);
+            case "LowerBodyGymSession":
+                return new LowerBodyGymSession(sessionString);
+            case "UpperBodyGymSession":
+                return new UpperBodyGymSession(sessionString);
+            default:
+                return null;
+        }
     }
 }

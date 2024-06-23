@@ -16,4 +16,6 @@ public interface FitnessSession {
     String getDescription();
 
     FitnessSession copy();
+
+    String bundleToString();
 }

@@ -1,5 +1,6 @@
 package com.example.fixitfitness;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -107,6 +108,11 @@ public class SetupActivity extends AppCompatActivity {
             // TODO: Redirect to the main activity
             Routine routine = createRoutine(level, injuryType, weight, height);
             Log.d("Routine:", routine.toString());
+
+            Intent intent = new Intent(this, DisplayPlanActivity.class);
+            routine.bundleRoutine(intent);
+            intent.putExtra("name", name);
+            startActivity(intent);
 
         } catch (SetupException e) {
             Log.e("SetupActivity", "Error setting up user", e);
@@ -339,7 +345,7 @@ public class SetupActivity extends AppCompatActivity {
 
 
     private BodyType getBodyType(float weight, float height) {
-        float bmi = 10000 *  weight / (height * height) ;
+        float bmi = 10000 * weight / (height * height);
         Log.d("BMI: ", String.valueOf(bmi));
         if (bmi < 18.5) {
             return BodyType.LIGHT;

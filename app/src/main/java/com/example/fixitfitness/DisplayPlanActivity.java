@@ -1,12 +1,16 @@
 package com.example.fixitfitness;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.fixitfitness.fitnessroutine.Routine;
 
 public class DisplayPlanActivity extends AppCompatActivity {
 
@@ -20,5 +24,18 @@ public class DisplayPlanActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+
+        String name = intent.getStringExtra("name");
+        Routine routine = new Routine(intent);
+
+        Log.d("DisplayPlanActivity", "Name: " + name);
+        Log.d("DisplayPlanActivity", "Routine: " + routine);
+
+
+
     }
+
+
 }
