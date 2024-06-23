@@ -27,5 +27,7 @@ public class IntroductionActivity extends AppCompatActivity {
     public void onContinueClick(View view) {
         Intent intent = new Intent(this, SetupActivity.class);
         startActivity(intent);
+
+
     }
 }

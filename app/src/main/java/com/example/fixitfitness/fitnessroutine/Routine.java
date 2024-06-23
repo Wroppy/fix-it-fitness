@@ -27,6 +27,10 @@ public class Routine {
 
     }
 
+    public List<FitnessSession> getSessions() {
+        return sessions;
+    }
+
     private void createRoutine(FootballLevel level, InjuryType injuryType, BodyType bodyType) {
         FitnessSession firstGymSession, secondGymSession;
         int distance = getDistance(injuryType);
