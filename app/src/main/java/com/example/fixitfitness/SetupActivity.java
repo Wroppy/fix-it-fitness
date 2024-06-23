@@ -333,7 +333,16 @@ public class SetupActivity extends AppCompatActivity {
         if (name.isEmpty()) {
             throw new InvalidNameException();
         }
-        return name;
+
+
+        // Checks for spaces or special characters in the name
+        if (!name.matches("[a-zA-Z]+")) {
+            throw new InvalidNameException();
+        }
+
+
+
+        return Utils.capitalize(name);
     }
 
 
