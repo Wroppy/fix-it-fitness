@@ -16,7 +16,7 @@ public class ConditioningSession implements FitnessSession {
     }
 
     public String getName() {
-        return name;
+        return name + " - " + distance + "km";
     }
 
     public String getDescription() {

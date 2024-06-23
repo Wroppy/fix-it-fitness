@@ -37,11 +37,14 @@ public class DisplayPlanActivity extends AppCompatActivity {
         TextView nameView = findViewById(R.id.hello_user_text_view);
         nameView.setText("Hello, " + name + "!");
 
-        TextView routineView = findViewById(R.id.prevention_plan_label);
-        routineView.setText(routine.toString());
+        TextView weekA = findViewById(R.id.week_a_plan);
+        String weekAString = routine.getWeekAString();
+        Log.d("DisplayPlanActivity", "Week A: " + weekAString);
+        weekA.setText(weekAString);
+
+        TextView weekB = findViewById(R.id.week_b_plan);
+        weekB.setText(routine.getWeekBString());
 
 
     }
-
-
 }

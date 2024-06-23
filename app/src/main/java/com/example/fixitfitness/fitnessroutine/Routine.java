@@ -1,6 +1,7 @@
 package com.example.fixitfitness.fitnessroutine;
 
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -17,10 +18,13 @@ import java.util.List;
 
 public class Routine {
     private List<FitnessSession> sessions;
+    private int numSessions;
 
     public Routine(FootballLevel level, InjuryType injuryType, BodyType bodyType) {
         this.sessions = new ArrayList<>();
+        numSessions = level.getWeeklySessions();
         createRoutine(level, injuryType, bodyType);
+
     }
 
     private void createRoutine(FootballLevel level, InjuryType injuryType, BodyType bodyType) {
@@ -185,6 +189,8 @@ public class Routine {
         this.sessions = new ArrayList<>();
         int numSessions = intent.getIntExtra("fitnessSessions", 0);
 
+        this.numSessions = numSessions / 2;
+
         for (int i = 0; i < numSessions; i++) {
             String sessionString = intent.getStringExtra("fitnessSession" + i);
 
@@ -211,5 +217,25 @@ public class Routine {
             default:
                 return null;
         }
+    }
+
+    public String getWeekAString() {
+        StringBuilder weekA = new StringBuilder();
+        Log.d("NumSessions", "" + numSessions);
+        for (int i = 0; i < numSessions; i++) {
+            weekA.append(i + 1).append(") ").append(sessions.get(i).getName()).append("\n");
+            Log.d("Routine", i + ") " + sessions.get(i).getName());
+        }
+        return weekA.toString();
+    }
+
+    public String getWeekBString() {
+        StringBuilder weekB = new StringBuilder();
+        int num = 1;
+        for (int i = numSessions; i < 2 * numSessions; i++) {
+            weekB.append(num++).append(") ").append(sessions.get(i).getName()).append("\n");
+            Log.d("Routine", i + ") " + sessions.get(i).getName());
+        }
+        return weekB.toString();
     }
 }
