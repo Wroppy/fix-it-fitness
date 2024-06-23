@@ -44,8 +44,18 @@ public class IntroductionActivity extends AppCompatActivity {
     }
 
     public void onContinueClick(View view) {
-        Intent intent = new Intent(this, SetupActivity.class);
+        Intent intent;
+
+        // If the user has completed setup, go to the display plan activity
+        if (isSetup) {
+            intent = new Intent(this, DisplayPlanActivity.class);
+            intent.putExtra("name", userInfo.getName());
+            userInfo.getRoutine().bundleRoutine(intent);
+        } else {
+            intent = new Intent(this, SetupActivity.class);
+        }
         startActivity(intent);
+
     }
 
 

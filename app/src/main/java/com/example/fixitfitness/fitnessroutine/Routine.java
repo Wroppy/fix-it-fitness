@@ -247,4 +247,15 @@ public class Routine {
         }
 
     }
+
+    public String bundleToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(sessions.size()).append("\n");
+
+        for (int i = 0; i < sessions.size(); i++) {
+            FitnessSession session = sessions.get(i);
+            sb.append(session.bundleToString()).append("\n");
+        }
+        return sb.toString();
+    }
 }

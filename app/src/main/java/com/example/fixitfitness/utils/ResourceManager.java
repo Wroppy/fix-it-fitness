@@ -23,17 +23,10 @@ public class ResourceManager {
     }
 
     public void writeUserInfo(Context context, UserInfo userInfo) {
-        StringBuilder sb = new StringBuilder();
         Routine routine = userInfo.getRoutine();
-        List<FitnessSession> sessions = routine.getSessions();
-        sb.append(sessions.size()).append("\n");
 
-        for (int i = 0; i < sessions.size(); i++) {
-            FitnessSession session = sessions.get(i);
-            sb.append(session.bundleToString()).append("\n");
-        }
         // Write the routine to a file
-        writeToFile(context, "routine.txt", sb.toString());
+        writeToFile(context, "routine.txt", routine.bundleToString());
 
         String name = userInfo.getName();
         writeToFile(context, "name.txt", name);
@@ -68,14 +61,20 @@ public class ResourceManager {
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+                String line = scanner.nextLine().trim().replace("\n", "");
+
+                if (line.isEmpty()) {
+                    continue;
+                }
                 sb.append(line).append("\n");
+
             }
+            return sb.toString().trim();
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("Error reading file");
         }
-        return sb.toString();
     }
 
     public UserInfo readUserInfo(Context context) throws NotSetupException {
