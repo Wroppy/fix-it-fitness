@@ -39,10 +39,9 @@ public class Routine {
             secondGymSession = new UpperBodyGymSession();
         }
 
-        addFootballSession();
-
         switch (bodyType) {
             case LIGHT:
+                addFootballSession();
                 sessions.add(firstGymSession.copy());
                 addFootballSession();
                 sessions.add(secondGymSession.copy());
@@ -56,6 +55,7 @@ public class Routine {
                 break;
             case MEDIUM:
                 // Week A
+                addFootballSession();
                 sessions.add(firstGymSession.copy());
 
                 addFootballSession();
@@ -71,19 +71,16 @@ public class Routine {
                 if (shouldAddExtraSession(level)) {
                     addFootballSession();
                     sessions.add(firstGymSession.copy());
-
-                    addFootballSession();
-                    sessions.add(new ConditioningSession(distance));
-
-                    addFootballSession();
-                    sessions.add(secondGymSession.copy());
 
                     addFootballSession();
                     sessions.add(new ConditioningSession(distance));
 
                 }
+
+                break;
             case HEAVY:
                 // Week A
+                addFootballSession();
                 sessions.add(new ConditioningSession(distance));
 
                 addFootballSession();
@@ -103,11 +100,6 @@ public class Routine {
                     addFootballSession();
                     sessions.add(firstGymSession.copy());
 
-                    addFootballSession();
-                    sessions.add(new ConditioningSession(distance));
-
-                    addFootballSession();
-                    sessions.add(secondGymSession.copy());
                 }
 
                 break;
