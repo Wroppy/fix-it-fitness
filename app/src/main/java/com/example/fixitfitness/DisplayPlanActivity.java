@@ -3,6 +3,7 @@ package com.example.fixitfitness;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,11 @@ public class DisplayPlanActivity extends AppCompatActivity {
         Log.d("DisplayPlanActivity", "Name: " + name);
         Log.d("DisplayPlanActivity", "Routine: " + routine);
 
+        TextView nameView = findViewById(R.id.hello_user_text_view);
+        nameView.setText("Hello, " + name + "!");
+
+        TextView routineView = findViewById(R.id.prevention_plan_label);
+        routineView.setText(routine.toString());
 
 
     }

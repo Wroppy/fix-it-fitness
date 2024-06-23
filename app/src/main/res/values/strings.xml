@@ -34,5 +34,5 @@
 
     <!-- Strings for displaying the prevention plan-->
     <string name="prevention_plan_display_title">Your Prevention Plan</string>
-    <string name="prevention_plan_display_description">Here is your prevention plan</string>
+    <string name="prevention_plan_display_description">Here is your prevention plan:</string>
 </resources>
