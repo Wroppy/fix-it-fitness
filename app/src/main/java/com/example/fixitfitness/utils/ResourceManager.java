@@ -21,6 +21,24 @@ public class ResourceManager {
         return directory;
     }
 
+    public void writeUserInfo(Context context, UserInfo userInfo) {
+        StringBuilder sb = new StringBuilder();
+        Routine routine = userInfo.getRoutine();
+        List<FitnessSession> sessions = routine.getSessions();
+        sb.append(sessions.size()).append("\n");
+
+        for (int i = 0; i < sessions.size(); i++) {
+            FitnessSession session = sessions.get(i);
+            sb.append(session.bundleToString()).append("\n");
+        }
+        // Write the routine to a file
+        writeToFile(context, "routine.txt", sb.toString());
+
+        String name = userInfo.getName();
+        writeToFile(context, "name.txt", name);
+    }
+
+
     private void writeToFile(Context context, String filename, String text) {
         try {
             File directory = getDirectory(context);
@@ -40,10 +58,10 @@ public class ResourceManager {
         writeToFile(context, "test.txt", "Hello, world!");
     }
 
-    public String testReadFromFile(Context context) {
+    public String readFile(Context context, String filename) {
         // Read from a file
         File directory = getDirectory(context);
-        File file = new File(directory, "test.txt");
+        File file = new File(directory, filename);
         // Read the contents of the file, and print it to the log
         StringBuilder sb = new StringBuilder();
         try {
@@ -55,8 +73,6 @@ public class ResourceManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return sb.toString();
-
     }
 }

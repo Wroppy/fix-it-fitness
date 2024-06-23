@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.fixitfitness.fitnessroutine.Routine;
+import com.example.fixitfitness.utils.ResourceManager;
 
 public class DisplayPlanActivity extends AppCompatActivity {
     UserInfo userInfo;
@@ -47,5 +48,7 @@ public class DisplayPlanActivity extends AppCompatActivity {
         weekB.setText(routine.getWeekBString());
 
         this.userInfo = new UserInfo(name, routine);
+        ResourceManager resourceManager = new ResourceManager();
+        resourceManager.writeUserInfo(this, this.userInfo);
     }
 }
