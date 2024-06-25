@@ -45,6 +45,7 @@ public class SetupActivity extends AppCompatActivity {
     private LinearLayout injuryLocationGroup;
     private List<SwitchCompat> injuryButtons;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Sets up and displays the activity
@@ -57,12 +58,7 @@ public class SetupActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Sets up the variables for future use
-        scrollView = findViewById(R.id.questions_scrollview);
-        layout = findViewById(R.id.questions_layout);
-        footballLevelGroup = findViewById(R.id.football_level_group);
-        injuryLocationGroup = findViewById(R.id.injury_location_group);
-        injuryButtons = new ArrayList<>();
+        setupVariables();
 
         // Sets up the layout to take full height if the ScrollView can scroll
         // Add a global layout listener to detect when the layout has been drawn
@@ -89,6 +85,19 @@ public class SetupActivity extends AppCompatActivity {
         addInjuryButtons();
     }
 
+    /**
+     * Sets up and assignments the appropriate classes to each attribute.
+     */
+    private void setupVariables() {
+        // Sets up the variables for future use
+        scrollView = findViewById(R.id.questions_scrollview);
+        layout = findViewById(R.id.questions_layout);
+        footballLevelGroup = findViewById(R.id.football_level_group);
+        injuryLocationGroup = findViewById(R.id.injury_location_group);
+        injuryButtons = new ArrayList<>();
+
+    }
+
     public void setupUser(View view) {
         try {
             // Gets the user's setup information
@@ -104,13 +113,15 @@ public class SetupActivity extends AppCompatActivity {
             Log.d("Level:", level.getName());
             Log.d("Injury Type:", injuryType.getName());
 
+            // Creates the associated routine
             Routine routine = createRoutine(level, injuryType, weight, height);
-            Log.d("Routine:", routine.toString());
 
+            // Saves it to the phone's storage
             UserInfo userInfo = new UserInfo(name, routine);
             ResourceManager resourceManager = new ResourceManager();
             resourceManager.writeUserInfo(this, userInfo);
 
+            // Displays the routine to the user in a different activity
             Intent intent = new Intent(this, DisplayPlanActivity.class);
             routine.bundleRoutine(intent);
             intent.putExtra("name", name);
@@ -194,10 +205,7 @@ public class SetupActivity extends AppCompatActivity {
     private void addRadioButton(String text, int id) {
 
         // Sets the layout parameters for the RadioButton
-        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
-                RadioGroup.LayoutParams.WRAP_CONTENT,
-                RadioGroup.LayoutParams.WRAP_CONTENT
-        );
+        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
 
         // Sets the text of the RadioButton
         RadioButton radioButton = new RadioButton(this);
@@ -245,10 +253,7 @@ public class SetupActivity extends AppCompatActivity {
      * @param text the text to display on the button
      */
     private void addInjuryButton(String text) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         // Adds padding to the bottom of the button
         params.setMargins(0, 0, 0, 20);
@@ -336,17 +341,24 @@ public class SetupActivity extends AppCompatActivity {
             throw new InvalidNameException();
         }
 
-
         // Checks for spaces or special characters in the name
         if (!name.matches("[a-zA-Z]+")) {
             throw new InvalidNameException();
         }
 
-
         return Utils.capitalize(name);
     }
 
 
+    /**
+     * Returns a routine based on the user's input params
+     *
+     * @param level      the football level the user selected
+     * @param injuryType the injury type the user has
+     * @param weight     the weight of the user
+     * @param height     the height of the user
+     * @return a routine associated with the user
+     */
     private Routine createRoutine(FootballLevel level, InjuryType injuryType, float weight, float height) {
         BodyType bodyType = getBodyType(weight, height);
         Log.d("Body Type:", bodyType.toString());
@@ -354,6 +366,13 @@ public class SetupActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Given the weight (kg) and height (cm), returns the body tyope associated with their bmi.
+     *
+     * @param weight the user's inputted weight
+     * @param height the user's inputted height
+     * @return the body type of the
+     */
     private BodyType getBodyType(float weight, float height) {
         float bmi = 10000 * weight / (height * height);
         Log.d("BMI: ", String.valueOf(bmi));
