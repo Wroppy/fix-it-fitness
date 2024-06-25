@@ -48,7 +48,7 @@ public class DisplayPlanActivity extends AppCompatActivity {
 
         // Changes the view to say hello to the user
         TextView nameView = findViewById(R.id.hello_user_text_view);
-        nameView.setText("Hello, " + name + "!");
+        nameView.setText(getString(R.string.user_welcome, name));
 
         // Displays each week's plan
         TextView weekA = findViewById(R.id.week_a_plan);

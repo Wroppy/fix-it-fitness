@@ -38,4 +38,6 @@
 
     <string name="week_a_label">Week A</string>
     <string name="week_b_label">Week B</string>
+
+    <string name="user_welcome">Hello, %s!</string>
 </resources>
