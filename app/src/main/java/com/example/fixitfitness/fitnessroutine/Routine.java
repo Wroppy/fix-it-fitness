@@ -1,6 +1,7 @@
 package com.example.fixitfitness.fitnessroutine;
 
 import android.content.Intent;
+import android.media.MediaCodec;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import com.example.fixitfitness.enums.BodyType;
 import com.example.fixitfitness.enums.FootballLevel;
 import com.example.fixitfitness.enums.InjuryType;
 
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,7 @@ public class Routine {
         FitnessSession firstGymSession, secondGymSession;
         int distance = getDistance(injuryType);
 
+        // Gets the first and second gym session based on the injury type
         if (injuryType == InjuryType.UPPER_BODY) {
             firstGymSession = new UpperBodyGymSession();
             secondGymSession = new LowerBodyGymSession();
@@ -92,83 +95,125 @@ public class Routine {
 
         switch (bodyType) {
             case LIGHT:
-                addFootballSession();
-                sessions.add(firstGymSession.copy());
-                addFootballSession();
-                sessions.add(secondGymSession.copy());
-
-                if (shouldAddExtraSession(level)) {
-                    addFootballSession();
-                    sessions.add(firstGymSession.copy());
-                }
-
-                repeatSessions();
+                addLightSessions(firstGymSession, secondGymSession, level);
                 break;
             case MEDIUM:
-                // Week A
-                addFootballSession();
-                sessions.add(firstGymSession.copy());
-
-                addFootballSession();
-                sessions.add(new ConditioningSession(distance));
-
-                // Week B
-                addFootballSession();
-                sessions.add(secondGymSession.copy());
-
-                addFootballSession();
-                sessions.add(new ConditioningSession(distance));
-
-                if (shouldAddExtraSession(level)) {
-                    addFootballSession();
-                    sessions.add(firstGymSession.copy());
-
-                    addFootballSession();
-                    sessions.add(new ConditioningSession(distance));
-
-                }
-
+                addMediumSessions(level, distance, firstGymSession, secondGymSession);
                 break;
             case HEAVY:
-                // Week A
-                addFootballSession();
-                sessions.add(new ConditioningSession(distance));
-
-                addFootballSession();
-                sessions.add(firstGymSession.copy());
-
-                // Week B
-                addFootballSession();
-                sessions.add(new ConditioningSession(distance));
-
-                addFootballSession();
-                sessions.add(secondGymSession.copy());
-
-                if (shouldAddExtraSession(level)) {
-                    addFootballSession();
-                    sessions.add(new ConditioningSession(distance));
-
-                    addFootballSession();
-                    sessions.add(firstGymSession.copy());
-
-                }
-
+                addHeavySessions(level, distance, firstGymSession, secondGymSession);
                 break;
             case VERY_HEAVY:
-                sessions.add(new ConditioningSession(distance));
-                addFootballSession();
-                sessions.add(new ConditioningSession(distance));
-
-                if (shouldAddExtraSession(level)) {
-                    addFootballSession();
-                    sessions.add(new ConditioningSession(distance));
-                }
-
-                repeatSessions();
+                addVeryHeavySessions(level, distance);
                 break;
         }
+    }
 
+    /**
+     * Adds fitness sessions to the routine for a light body type.
+     *
+     * @param firstGymSession  the first gym session to add
+     * @param secondGymSession the second gym session to add
+     * @param level            the level of football the user is at
+     */
+    public void addLightSessions(FitnessSession firstGymSession, FitnessSession secondGymSession, FootballLevel level) {
+        addFootballSession();
+        sessions.add(firstGymSession.copy());
+        addFootballSession();
+        sessions.add(secondGymSession.copy());
 
+        if (shouldAddExtraSession(level)) {
+            addFootballSession();
+            sessions.add(firstGymSession.copy());
+        }
+
+        repeatSessions();
+    }
+
+    /**
+     * Adds fitness sessions to the routine for a medium body type.
+     *
+     * @param level            the level of football the user is at
+     * @param distance         the distance the user has to run for conditioning
+     * @param firstGymSession  the first gym session to add
+     * @param secondGymSession the second gym session to add
+     */
+    public void addMediumSessions(FootballLevel level, int distance, FitnessSession firstGymSession, FitnessSession secondGymSession) {
+        // Week A
+        addFootballSession();
+        sessions.add(firstGymSession.copy());
+
+        addFootballSession();
+        sessions.add(new ConditioningSession(distance));
+
+        // Week B
+        addFootballSession();
+        sessions.add(secondGymSession.copy());
+
+        addFootballSession();
+        sessions.add(new ConditioningSession(distance));
+
+        if (shouldAddExtraSession(level)) {
+            addFootballSession();
+            sessions.add(firstGymSession.copy());
+
+            addFootballSession();
+            sessions.add(new ConditioningSession(distance));
+
+        }
+    }
+
+    /**
+     * Adds a football session to the routine for a heavy body type.
+     *
+     * @param level            the level of football the user is at
+     * @param distance         the distance the user has to run for conditioning
+     * @param firstGymSession  the first gym session to add
+     * @param secondGymSession the second gym session to add
+     */
+    private void addHeavySessions(FootballLevel level, int distance, FitnessSession firstGymSession, FitnessSession secondGymSession) {
+        // Week A
+        addFootballSession();
+        sessions.add(new ConditioningSession(distance));
+
+        addFootballSession();
+        sessions.add(firstGymSession.copy());
+
+        // Week B
+        addFootballSession();
+        sessions.add(new ConditioningSession(distance));
+
+        addFootballSession();
+        sessions.add(secondGymSession.copy());
+
+        // Adds the extra sessions if semi committed or above
+        if (shouldAddExtraSession(level)) {
+            addFootballSession();
+            sessions.add(new ConditioningSession(distance));
+
+            addFootballSession();
+            sessions.add(firstGymSession.copy());
+
+        }
+    }
+
+    /**
+     * Adds sessions associated with a very heavy body type routine
+     *
+     * @param level    the level the user is at football
+     * @param distance the distance the user has to run for conditioning
+     */
+    private void addVeryHeavySessions(FootballLevel level, int distance) {
+        sessions.add(new ConditioningSession(distance));
+        addFootballSession();
+        sessions.add(new ConditioningSession(distance));
+
+        if (shouldAddExtraSession(level)) {
+            addFootballSession();
+            sessions.add(new ConditioningSession(distance));
+        }
+
+        repeatSessions();
     }
 
     /**
