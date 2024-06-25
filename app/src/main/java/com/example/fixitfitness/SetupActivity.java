@@ -26,6 +26,7 @@ import com.example.fixitfitness.exceptions.InvalidNameException;
 import com.example.fixitfitness.exceptions.InvalidWeightException;
 import com.example.fixitfitness.exceptions.SetupException;
 import com.example.fixitfitness.fitnessroutine.Routine;
+import com.example.fixitfitness.utils.ResourceManager;
 import com.example.fixitfitness.utils.Utils;
 
 import android.widget.RadioButton;
@@ -38,7 +39,6 @@ import java.util.List;
 import java.util.Set;
 
 public class SetupActivity extends AppCompatActivity {
-
     private ScrollView scrollView;
     private LinearLayout layout;
     private RadioGroup footballLevelGroup;
@@ -104,10 +104,12 @@ public class SetupActivity extends AppCompatActivity {
             Log.d("Level:", level.getName());
             Log.d("Injury Type:", injuryType.getName());
 
-            // TODO: Save the user's height and weight
-            // TODO: Redirect to the main activity
             Routine routine = createRoutine(level, injuryType, weight, height);
             Log.d("Routine:", routine.toString());
+
+            UserInfo userInfo = new UserInfo(name, routine);
+            ResourceManager resourceManager = new ResourceManager();
+            resourceManager.writeUserInfo(this, userInfo);
 
             Intent intent = new Intent(this, DisplayPlanActivity.class);
             routine.bundleRoutine(intent);
@@ -339,7 +341,6 @@ public class SetupActivity extends AppCompatActivity {
         if (!name.matches("[a-zA-Z]+")) {
             throw new InvalidNameException();
         }
-
 
 
         return Utils.capitalize(name);

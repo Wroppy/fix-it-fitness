@@ -56,9 +56,5 @@ public class DisplayPlanActivity extends AppCompatActivity {
 
         TextView weekB = findViewById(R.id.week_b_plan);
         weekB.setText(routine.getWeekBString());
-
-        this.userInfo = new UserInfo(name, routine);
-        ResourceManager resourceManager = new ResourceManager();
-        resourceManager.writeUserInfo(this, this.userInfo);
     }
 }
