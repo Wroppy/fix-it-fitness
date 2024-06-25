@@ -28,21 +28,31 @@ public class DisplayPlanActivity extends AppCompatActivity {
             return insets;
         });
 
+
+        displayUserRoutine();
+    }
+
+    /**
+     * Displays the user's routine and name when the activity is opened up.
+     */
+    private void displayUserRoutine() {
         Intent intent = getIntent();
 
+        // Gets the routine and name associated passed in from other activities
         String name = intent.getStringExtra("name");
         Routine routine = new Routine(intent);
 
+        // Logging for debugging reasons
         Log.d("DisplayPlanActivity", "Name: " + name);
         Log.d("DisplayPlanActivity", "Routine: " + routine);
 
+        // Changes the view to say hello to the user
         TextView nameView = findViewById(R.id.hello_user_text_view);
         nameView.setText("Hello, " + name + "!");
 
+        // Displays each week's plan
         TextView weekA = findViewById(R.id.week_a_plan);
-        String weekAString = routine.getWeekAString();
-        Log.d("DisplayPlanActivity", "Week A: " + weekAString);
-        weekA.setText(weekAString);
+        weekA.setText(routine.getWeekAString());
 
         TextView weekB = findViewById(R.id.week_b_plan);
         weekB.setText(routine.getWeekBString());
