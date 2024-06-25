@@ -31,16 +31,7 @@ public class IntroductionActivity extends AppCompatActivity {
             return insets;
         });
 
-        resourceManager = new ResourceManager();
-        try {
-            userInfo = resourceManager.readUserInfo(this);
-            isSetup = true;
-        } catch (NotSetupException e) {
-            isSetup = false;
-        }
-
-        Log.d("IntroductionActivity", "Is setup: " + isSetup);
-
+        setupUser();
     }
 
     public void onContinueClick(View view) {
@@ -55,6 +46,22 @@ public class IntroductionActivity extends AppCompatActivity {
             intent = new Intent(this, SetupActivity.class);
         }
         startActivity(intent);
+    }
+
+    /**
+     * Attempts to load the user from the phone's memory.
+     * If it does not exist, change the button's onclick function.
+     */
+    public void setupUser() {
+        resourceManager = new ResourceManager();
+        try {
+            userInfo = resourceManager.readUserInfo(this);
+            isSetup = true;
+        } catch (NotSetupException e) {
+            isSetup = false;
+        }
+
+        Log.d("IntroductionActivity", "Is setup: " + isSetup);
 
     }
 
