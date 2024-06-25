@@ -52,7 +52,7 @@ public class IntroductionActivity extends AppCompatActivity {
      * Attempts to load the user from the phone's memory.
      * If it does not exist, change the button's onclick function.
      */
-    public void setupUser() {
+    private void setupUser() {
         resourceManager = new ResourceManager();
         try {
             userInfo = resourceManager.readUserInfo(this);
